@@ -21,7 +21,6 @@ Everything runs **100% client-side** in a single browser tab. There is no backen
   - Symbol suffixes, leading symbols, symbol+number patterns (`@9591`, `#1996`, `@1996!`)
   - Meaningful numbers mined from **both ends** of the phone number, DOB fragments, vehicle/PIN numbers and free text
   - Two-field combinations with `.`, `_`, `-` and no separator (`johnsmith123`, `smith.john!`)
-  - Number-first patterns (`9591Sunny`, `9591@Sunny`)
   - Published common passwords (optional)
 - **Smart de-duplication** — a `Set`-backed pipeline guarantees unique output.
 - **Filtering** — minimum / maximum password length.
@@ -93,7 +92,6 @@ No build step, no secrets, no Actions workflow required. If you want a custom do
    - **Numeric suffixes up to** — `99` covers `name0` … `name99`; `9999` is much heavier.
    - **Leet substitutions** — full is recommended; disable for smaller, cleaner lists.
    - **Two-field combinations** — name + pet, first + last, name + year, etc.
-   - **Number-first patterns** — adds `9591Sunny` and `9591@Sunny` in addition to `Sunny9591`.
    - **Leading symbols** — adds `!Password1`-style candidates.
 3. Hit **Generate passwords** (or `Ctrl`/`Cmd` + `Enter`).
 4. Use **Copy all**, **Download .txt**, or **Download .csv**.
@@ -110,27 +108,16 @@ No build step, no secrets, no Actions workflow required. If you want a custom do
 
 For each input field PassForge derives base tokens:
 
-| Source | Example tokens |
-| --- | --- |
-| `Rahul Sharma` | `Rahul`, `Sharma`, `RahulSharma`, `SharmaRahul`, `Rahul.Sharma`, `Rahul_Sharma`, `RS` |
-| `Bruno` (pet) | `Bruno` |
-| `1990-05-14` | `1990`, `90`, `14`, `05`, `1405`, `0514`, `14051990`, `140590`, `may` |
-| `9591314312` (phone) | `9591`, `4312`, `95913`, `14312`, `959131`, `314312`, `9591314312` |
-| `9591` (important number) | Also used in `Sunny@9591`, `Sunny#9591`, `9591Sunny`, `9591@Sunny` |
-| `+91 98765 43210` | `919876543210`, `3210`, `43210`, `543210`, `9876543210` |
-| `rahul.sharma@example.com` | `rahul`, `sharma`, `rahul.sharma` |
 | `Sharma_5G` (Wi-Fi) | `Sharma5G`, `Sharma`, `5G`, `S5` |
 
 Each token is expanded with case + leet variants, then combined with suffixes in priority order:
 
 1. core patterns (`123`, `1234`, `!`, `@`, current year)
 2. meaningful numbers from the profile — both ends of the phone number, DOB fragments, vehicle/PIN numbers, anything typed into **Important numbers**
-3. symbol + number combinations (`Sunny@9591`, `Sunny#1996`, `Sunny@9591!`)
 4. the full birth-year range
 5. the numeric range
 6. the wider symbol × number space
 
-Two-field combinations (`johnsmith123`) and number-first patterns (`9591Sunny`, `9591@Sunny`) get their own budget slices, and a short common-password list is appended when space remains.
 
 Generation is deterministic for the same inputs and options, and output is de-duplicated.
 
@@ -181,7 +168,6 @@ Runs the Node test suite in `tests/engine.test.js` (no dependencies).
 | Append symbols | on | Symbols from the Symbols field |
 | Symbols to use | `!@#$%&*?._-+` | Any non-space characters |
 | Two-field combinations | on | Uses names, pet, partner, child, company, city |
-| Number-first patterns | on | `9591Sunny`, `9591@Sunny` |
 | Leading symbols | off | `!Password1`, `@Password123` |
 | Common passwords | on | Short published top-password list |
 | Leet substitutions | full | `none`, `basic`, `full` |
