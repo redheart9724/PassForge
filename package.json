@@ -1,0 +1,19 @@
+{
+  "name": "passforge",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Context-aware candidate password generator for authorized security testing. 100% client-side.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/engine.test.js",
+    "start": "npx --yes serve ."
+  },
+  "keywords": [
+    "security",
+    "pentest",
+    "password",
+    "wordlist",
+    "osint",
+    "red-team"
+  ]
+}

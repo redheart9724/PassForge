@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PassForge — Candidate Password Generator</title>
+  <meta name="description" content="Generate targeted candidate password lists from names, dates of birth, phone numbers, pets, Wi-Fi names and more. 100% client-side, built for authorized security testing.">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%91%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">PF</span>
+      <div class="brand-text">
+        <h1>PassForge</h1>
+        <p>Context-aware candidate password generator for authorized security testing</p>
+      </div>
+    </div>
+    <span class="privacy-badge">
+      <span class="dot" aria-hidden="true"></span>
+      100% client-side · nothing leaves your browser
+    </span>
+  </div>
+</header>
+
+<main class="wrap layout">
+
+  <!-- ---------------------------------------------------------------- -->
+  <!-- Input panel                                                       -->
+  <!-- ---------------------------------------------------------------- -->
+  <section class="card form-card">
+    <form id="pf-form" autocomplete="off" spellcheck="false">
+      <div class="card-heading">
+        <h2>Target details</h2>
+        <p>Fill in whatever you know. Every field is optional, but more context means better coverage.</p>
+      </div>
+
+      <div class="field-grid">
+        <label class="field">
+          <span>First name</span>
+          <input id="in-first" type="text" placeholder="e.g. Rahul" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Last name</span>
+          <input id="in-last" type="text" placeholder="e.g. Sharma" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Nickname</span>
+          <input id="in-nick" type="text" placeholder="e.g. Rocky" autocomplete="off">
+        </label>
+
+        <label class="field">
+          <span>Date of birth</span>
+          <input id="in-dob" type="date">
+        </label>
+        <label class="field">
+          <span>Mobile number</span>
+          <input id="in-phone" type="tel" placeholder="e.g. 9876543210" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Email address</span>
+          <input id="in-email" type="email" placeholder="e.g. rahul@example.com" autocomplete="off">
+        </label>
+
+        <label class="field">
+          <span>Pet name</span>
+          <input id="in-pet" type="text" placeholder="e.g. Bruno" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Partner / spouse</span>
+          <input id="in-partner" type="text" placeholder="e.g. Priya" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Child's name</span>
+          <input id="in-child" type="text" placeholder="e.g. Aarav" autocomplete="off">
+        </label>
+
+        <label class="field">
+          <span>Company / organisation</span>
+          <input id="in-company" type="text" placeholder="e.g. Acme Corp" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>City</span>
+          <input id="in-city" type="text" placeholder="e.g. Pune" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Wi-Fi network name</span>
+          <input id="in-wifi" type="text" placeholder="e.g. Sharma_5G" autocomplete="off">
+        </label>
+
+        <label class="field">
+          <span>Favourite team</span>
+          <input id="in-team" type="text" placeholder="e.g. Mumbai Indians" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Hobby / interest</span>
+          <input id="in-hobby" type="text" placeholder="e.g. cricket" autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Important numbers</span>
+          <input id="in-numbers" type="text" placeholder="e.g. 9591, 4321, 2017" autocomplete="off">
+        </label>
+
+        <label class="field">
+          <span>Any other keyword</span>
+          <input id="in-extra-1" type="text" placeholder="e.g. bike number, school" autocomplete="off">
+        </label>
+        <label class="field span-2">
+          <span>Extra keywords <em>(comma or newline separated)</em></span>
+          <textarea id="in-extra" rows="2" placeholder="e.g. Royal Enfield, MH12AB1234, St. Xavier's, 4321"></textarea>
+        </label>
+      </div>
+
+      <details class="options" open>
+        <summary>
+          <span>Generation options</span>
+          <span class="summary-hint">leet, numbers, years, symbols, combinations</span>
+        </summary>
+
+        <div class="options-grid">
+          <label class="field">
+            <span>Minimum length</span>
+            <input id="opt-min" type="number" min="1" max="128" value="4">
+          </label>
+          <label class="field">
+            <span>Maximum length</span>
+            <input id="opt-max" type="number" min="1" max="128" value="32">
+          </label>
+          <label class="field">
+            <span>Max results</span>
+            <input id="opt-limit" type="number" min="100" max="1000000" step="100" value="200000">
+          </label>
+
+          <label class="field">
+            <span>Leet substitutions</span>
+            <select id="opt-leet">
+              <option value="full" selected>Full (a→4, @ · i→1, ! · s→5, $)</option>
+              <option value="basic">Basic (a→4, e→3, i→1, o→0, s→5, t→7)</option>
+              <option value="none">None</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Letter case</span>
+            <select id="opt-case">
+              <option value="all" selected>All variants</option>
+              <option value="lower">Lowercase only</option>
+              <option value="upper">Uppercase only</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Numeric suffixes up to</span>
+            <input id="opt-maxnumber" type="number" min="0" max="9999" value="99">
+          </label>
+
+          <div class="check-col">
+            <label class="check">
+              <input id="opt-numbers" type="checkbox" checked>
+              <span>Append numbers (0…<span id="opt-maxnumber-label">99</span>)</span>
+            </label>
+            <label class="check">
+              <input id="opt-years" type="checkbox" checked>
+              <span>Append years</span>
+            </label>
+            <label class="check">
+              <input id="opt-symbols-on" type="checkbox" checked>
+              <span>Append symbols</span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Symbols to use</span>
+            <input id="opt-symbols" type="text" value="!@#$%&amp;*?._-+" autocomplete="off">
+          </label>
+          <div class="field-pair">
+            <label class="field">
+              <span>Year from</span>
+              <input id="opt-yearfrom" type="number" min="1900" max="2100" value="1980">
+            </label>
+            <label class="field">
+              <span>Year to</span>
+              <input id="opt-yearto" type="number" min="1900" max="2100" value="2026">
+            </label>
+          </div>
+
+          <div class="check-col span-2">
+            <label class="check">
+              <input id="opt-pairs" type="checkbox" checked>
+              <span>Two-field combinations (first+last, name+pet, name+year…)</span>
+            </label>
+            <label class="check">
+              <input id="opt-number-prefix" type="checkbox" checked>
+              <span>Number-first patterns (9591Sunny, 9591@Sunny)</span>
+            </label>
+            <label class="check">
+              <input id="opt-prefix" type="checkbox">
+              <span>Leading symbols too (!Password1)</span>
+            </label>
+            <label class="check">
+              <input id="opt-common" type="checkbox" checked>
+              <span>Include published common passwords</span>
+            </label>
+          </div>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button type="submit" id="btn-generate" class="btn primary">
+          <span class="btn-label">Generate passwords</span>
+        </button>
+        <button type="button" id="btn-example" class="btn ghost">Load example</button>
+        <button type="reset" id="btn-reset" class="btn ghost">Reset</button>
+      </div>
+
+      <p class="note">
+        Shortcut: <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to generate.
+        Everything is computed in this tab; no network requests are made.
+      </p>
+    </form>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <!-- Results panel                                                     -->
+  <!-- ---------------------------------------------------------------- -->
+  <section class="card results-card" aria-live="polite">
+    <div class="results-head">
+      <div>
+        <h2>Results</h2>
+        <p class="results-sub">Deduplicated, length-filtered candidates</p>
+      </div>
+      <span id="count-badge" class="badge">0</span>
+    </div>
+
+    <div id="status" class="status">No output yet — add some target details and hit <strong>Generate</strong>.</div>
+
+    <div class="actions results-actions">
+      <button type="button" id="btn-copy" class="btn small primary" disabled>Copy all</button>
+      <button type="button" id="btn-txt" class="btn small ghost" disabled>Download .txt</button>
+      <button type="button" id="btn-csv" class="btn small ghost" disabled>Download .csv</button>
+    </div>
+
+    <div class="preview-head">
+      <span>Preview</span>
+      <span id="preview-note" class="preview-note">Nothing generated</span>
+    </div>
+    <pre id="preview" class="preview" tabindex="0">Candidates will appear here…</pre>
+
+    <p class="note results-note">
+      The preview is a sample. <strong>Copy all</strong> and the downloads always contain the full list.
+      Treat every output as sensitive.
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>
+      <strong>Authorized use only.</strong> PassForge is a wordlist-profiling helper for penetration tests,
+      incident response, red-team engagements and password audits. Only use it against accounts and systems
+      you own or have explicit written permission to test. The author accepts no liability for misuse.
+    </p>
+    <p class="footer-meta">No analytics · no cookies · no server · MIT licensed</p>
+  </div>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
